@@ -35,76 +35,49 @@
 ## 4. Create `script.py` Using Vim
 
 1. On the EC2 instance:
-   ```bash
+   sudo su -  (root permission)
    vim script.py
-   ```
-2. Press `i` for insert mode, paste your Python code.
-3. Press `Esc`, then type `:wq` and press `Enter` to save and exit.
+3. Press `i` for insert mode, paste your Python code.
+4. Press `Esc`, then type `:wq` and press `Enter` to save and exit.
 
----
+## 5. Install Python and Boto3 and aws configure 
 
-## 5. Configure AWS CLI Using IAM User
+```bash
+yum install python3 -y   # Amazon Linux
+# or
+apt-get install python3 -y   # Ubuntu
 
-1. **Install AWS CLI** (if not pre-installed):
-   - Amazon Linux:
-     ```bash
-     sudo yum install awscli -y
-     ```
-   - Ubuntu:
-     ```bash
-     sudo apt-get install awscli -y
-     ```
-2. Run the configuration:
+yum install python3-pip -y
+
+pip install boto3
+```
+** Run the configuration:**
    ```bash
    aws configure
-   ```
-3. Enter your IAM credentials:
+**Enter your IAM credentials: Got to IAM > Security credentials > Create access key**
    - Access Key ID
    - Secret Access Key
    - Default region (e.g., us-east-1)
    - Output format (e.g., json)
 
----
+<img width="377" height="62" alt="image" src="https://github.com/user-attachments/assets/4676ff09-9808-4496-ae2e-b823f8ff15c7" />
 
-## 6. (Optional) Install Python and Boto3
+python3 script.py
 
-```bash
-sudo yum install python3 -y   # Amazon Linux
-# or
-sudo apt-get install python3 -y   # Ubuntu
-
-pip3 install boto3
-```
-
----
-
-## 7. Create Apache Flink – Studio Notebook
+**6. Create Apache Flink – Studio Notebook**
 
 1. In AWS Console, go to **Kinesis Data Analytics**.
 2. Click **Studio notebooks**.
 3. Click **Create Studio notebook**.
-4. Provide a name, select your Kinesis stream as a source, and create.
-5. Open the notebook and start writing Flink code (Scala, Python, or SQL).
+4. Choose a method to setup the Studio notebook ( Quick create with sample code ) > Provide a name > AWS Glue database > create a database and connect it and click on Create Studio notebook
+5. Open the notebook and click on run
+6. Once the notebook is preoared > click on **Open in Apache Zeppelin**
+7. Create a new note in Zeppelin and provide a name
+8. copy the test.sql code and run the note , if any error comes outfor permissions . Go to IAM > OPEN the role > add permission > **AWSGlueConsoleFullAccess** and save the changes
+9.Run the code again and code will pass
+10. Run the select statement to get the data 
 
----
 
-## Example: Minimal Python Script to Write to Kinesis
-
-```python
-import boto3
-
-kinesis = boto3.client('kinesis', region_name='us-east-1')
-
-data = 'Hello Kinesis!'
-response = kinesis.put_record(
-    StreamName='my-stream',
-    Data=data.encode('utf-8'),
-    PartitionKey='partition-1'
-)
-print(response)
-```
-
----
 
 ## Summary Checklist
 
